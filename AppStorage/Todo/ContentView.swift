@@ -44,6 +44,9 @@ struct ContentView: View {
                             title: $title5)
             }
             .navigationTitle("Todos")
+            .onAppear {
+                print("You can find the data here: \(NSHomeDirectory())/Library/Preferences/\(Bundle.main.bundleIdentifier!).plist")
+            }
         }
     }
 }
