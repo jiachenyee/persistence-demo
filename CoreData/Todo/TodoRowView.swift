@@ -23,7 +23,7 @@ struct TodoRowView: View {
                 Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
             }
             TextField("Title", text: Binding(get: {
-                todo.title!
+                todo.title ?? ""
             }, set: { value in
                 todo.title = value
                 try! viewContext.save()
