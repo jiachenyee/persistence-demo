@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CloudKit
 
 struct PersistenceController {
     static let shared = PersistenceController()
@@ -28,18 +29,48 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentContainer
+    let container: NSPersistentCloudKitContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "Todo")
+        container = NSPersistentCloudKitContainer(name: "Todo")
+        
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        
+        let localStoreDescription = container.persistentStoreDescriptions.first!
+        let storesURL = localStoreDescription.url!.deletingLastPathComponent()
+        
+        localStoreDescription.url = storesURL.appendingPathComponent("private.sqlite")
+        
+        // Create a store description for a CloudKit-backed local store
+        let cloudStoreLocation = storesURL.appendingPathComponent("cloud.sqlite")
+        let cloudStoreDescription =
+            NSPersistentStoreDescription(url: cloudStoreLocation)
+        cloudStoreDescription.configuration = "Cloud"
+
+        cloudStoreDescription.cloudKitContainerOptions =
+            NSPersistentCloudKitContainerOptions(
+                containerIdentifier: "app.jiachen.sample.todo")
+        
+        container.persistentStoreDescriptions = [
+            localStoreDescription,
+            cloudStoreDescription
+        ]
+        
+        container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        })
+        }
+        
         container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        do {
+            try container.viewContext.setQueryGenerationFrom(.current)
+        } catch {
+            fatalError("Failed to pin viewContext to the current generation: \(error)")
+        }
     }
 }
