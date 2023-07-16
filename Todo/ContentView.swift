@@ -11,18 +11,39 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Todo.creationDate, ascending: true)],
-        animation: .default)
-    private var todos: FetchedResults<Todo>
-
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.creationDate, ascending: true)],
+                  predicate: NSPredicate(format: "isCompleted == true"),
+                  animation: .default)
+    private var doneTodos: FetchedResults<Todo>
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.creationDate, ascending: true)],
+                  predicate: NSPredicate(format: "isCompleted == false"),
+                  animation: .default)
+    private var undoneTodos: FetchedResults<Todo>
+    
+    @AppStorage("username") private var username = ""
+    @State private var isOnboardingPresented = false
+    
     var body: some View {
         NavigationStack {
             List {
-                ForEach(todos) { todo in
-                    TodoRowView(todo: todo)
+                Section("Incomplete") {
+                    ForEach(undoneTodos) { todo in
+                        TodoRowView(todo: todo)
+                    }
+                    .onDelete {
+                        deleteItems(todos: undoneTodos, offsets: $0)
+                    }
                 }
-                .onDelete(perform: deleteItems)
+                
+                Section("Completed") {
+                    ForEach(doneTodos) { todo in
+                        TodoRowView(todo: todo)
+                    }
+                    .onDelete {
+                        deleteItems(todos: doneTodos, offsets: $0)
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -34,6 +55,16 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationTitle("\(username)'s Todos")
+        }
+        .onAppear {
+            if username.isEmpty {
+                isOnboardingPresented = true
+            }
+        }
+        .sheet(isPresented: $isOnboardingPresented) {
+            OnboardingView()
+                .interactiveDismissDisabled()
         }
     }
 
@@ -47,15 +78,13 @@ struct ContentView: View {
             do {
                 try viewContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteItems(todos: FetchedResults<Todo>, offsets: IndexSet) {
         withAnimation {
             offsets.map { todos[$0] }.forEach(viewContext.delete)
 

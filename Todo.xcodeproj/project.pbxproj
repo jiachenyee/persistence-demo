@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		762247CE2A638F6E00031FDB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762247CD2A638F6E00031FDB /* OnboardingView.swift */; };
+		762247D02A6396AC00031FDB /* TodoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762247CF2A6396AC00031FDB /* TodoInfoView.swift */; };
 		76E3C5922A52BB0C00F30DAC /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E3C5912A52BB0C00F30DAC /* TodoApp.swift */; };
 		76E3C5942A52BB0C00F30DAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E3C5932A52BB0C00F30DAC /* ContentView.swift */; };
 		76E3C5962A52BB0D00F30DAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E3C5952A52BB0D00F30DAC /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		762247CD2A638F6E00031FDB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		762247CF2A6396AC00031FDB /* TodoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoInfoView.swift; sourceTree = "<group>"; };
 		76E3C58E2A52BB0C00F30DAC /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76E3C5912A52BB0C00F30DAC /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		76E3C5932A52BB0C00F30DAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,7 +63,9 @@
 			children = (
 				76E3C5912A52BB0C00F30DAC /* TodoApp.swift */,
 				76E3C5932A52BB0C00F30DAC /* ContentView.swift */,
+				762247CD2A638F6E00031FDB /* OnboardingView.swift */,
 				76E3C5A62A52C0C900F30DAC /* TodoRowView.swift */,
+				762247CF2A6396AC00031FDB /* TodoInfoView.swift */,
 				76E3C5952A52BB0D00F30DAC /* Assets.xcassets */,
 				76E3C59A2A52BB0D00F30DAC /* Persistence.swift */,
 				76E3C59C2A52BB0D00F30DAC /* Todo.xcdatamodeld */,
@@ -149,6 +155,8 @@
 				76E3C59B2A52BB0D00F30DAC /* Persistence.swift in Sources */,
 				76E3C5942A52BB0C00F30DAC /* ContentView.swift in Sources */,
 				76E3C5A72A52C0C900F30DAC /* TodoRowView.swift in Sources */,
+				762247D02A6396AC00031FDB /* TodoInfoView.swift in Sources */,
+				762247CE2A638F6E00031FDB /* OnboardingView.swift in Sources */,
 				76E3C5922A52BB0C00F30DAC /* TodoApp.swift in Sources */,
 				76E3C59E2A52BB0D00F30DAC /* Todo.xcdatamodeld in Sources */,
 			);

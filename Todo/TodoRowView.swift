@@ -14,6 +14,8 @@ struct TodoRowView: View {
     
     @ObservedObject var todo: Todo
     
+    @State private var isInfoPresented = false
+    
     var body: some View {
         HStack {
             Button {
@@ -22,20 +24,23 @@ struct TodoRowView: View {
             } label: {
                 Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
             }
+            .buttonStyle(.plain)
+            
             TextField("Title", text: Binding(get: {
                 todo.title ?? ""
             }, set: { value in
                 todo.title = value
                 try! viewContext.save()
             }))
+            
+            Button {
+                isInfoPresented = true
+            } label: {
+                Image(systemName: "info.circle")
+            }
+        }
+        .sheet(isPresented: $isInfoPresented) {
+            TodoInfoView(todo: todo)
         }
     }
 }
-
-//struct TodoRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TodoRowView(todo: .constant(Todo(title: "Water plants",
-//                                         isCompleted: false)))
-//        .previewLayout(.sizeThatFits)
-//    }
-//}
