@@ -63,7 +63,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $isOnboardingPresented) {
-            OnboardingView()
+            OnboardingView(username: $username)
                 .interactiveDismissDisabled()
         }
     }

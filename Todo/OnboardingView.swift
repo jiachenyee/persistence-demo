@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @AppStorage("username") private var username = ""
+    @Binding var username: String
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -33,6 +33,6 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        OnboardingView(username: .constant(""))
     }
 }
