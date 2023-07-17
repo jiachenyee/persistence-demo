@@ -21,7 +21,8 @@ struct ContentView: View {
                   animation: .default)
     private var undoneTodos: FetchedResults<Todo>
     
-    @AppStorage("username") private var username = ""
+    // TODO: Save username
+    @State private var username = ""
     @State private var isOnboardingPresented = false
     
     var body: some View {

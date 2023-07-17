@@ -83,21 +83,7 @@ struct TodoInfoView: View {
     
     func saveImage(data: Data?) {
         guard let data else { return }
-        do {
-            let storageURL = URL.documentsDirectory.appending(component: UUID().uuidString)
-            print(storageURL)
-            
-            try data.write(to: storageURL)
-            
-            todo.imageURL = storageURL
-            
-            Task {
-                try await MainActor.run {
-                    try viewContext.save()
-                }
-            }
-        } catch {
-            print("Failed to save image:", error.localizedDescription)
-        }
+        
+        // TODO: Save photos to Files
     }
 }
