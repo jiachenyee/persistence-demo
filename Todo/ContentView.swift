@@ -71,7 +71,7 @@ struct ContentView: View {
     private func addItem() {
         withAnimation {
             let newItem = Todo(context: viewContext)
-            newItem.creationDate = Date()
+            newItem.creationDate = Date.now
             newItem.title = ""
             newItem.isCompleted = false
             
